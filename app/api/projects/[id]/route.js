@@ -50,27 +50,39 @@ export async function PUT(request, { params }) {
     const body = await request.json();
     const { title, description, imageUrl, projectUrl, githubUrl, technologies } = body;
 
-    // Validate required fields
-    if (!title || !description || !technologies || technologies.length === 0) {
+    // Check if project exists first
+    const existingProject = await prisma.project.findUnique({ where: { id } });
+    if (!existingProject) {
       return NextResponse.json(
-        { error: 'Missing required fields: title, description, and technologies are required' },
+        { error: 'Project not found' },
+        { status: 404 }
+      );
+    }
+
+    // Validate required fields
+    if (!title || !description || !Array.isArray(technologies) || technologies.length === 0) {
+      return NextResponse.json(
+        { error: 'Missing required fields: title, description, and technologies (non-empty array) are required' },
         { status: 400 }
       );
     }
 
-    const project = await prisma.project.update({
-      where: { id: id },
-      data: {
-        title,
-        description,
-        imageUrl,
-        projectUrl,
-        githubUrl,
-        technologies
-      }
-    });
-
-    return NextResponse.json(project);
+    try {
+      const project = await prisma.project.update({
+        where: { id: id },
+        data: {
+          title,
+          description,
+          imageUrl,
+          projectUrl,
+          githubUrl,
+          technologies
+        }
+      });
+      return NextResponse.json(project);
+    } catch (error) {
+      throw error;
+    }
   } catch (error) {
     console.error('Error updating project:', error);
     

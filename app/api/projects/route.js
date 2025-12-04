@@ -24,9 +24,9 @@ export async function POST(request) {
     const { title, description, imageUrl, projectUrl, githubUrl, technologies } = body;
     
     // Validate required fields
-    if (!title || !description || !technologies || technologies.length === 0) {
+    if (!title || !description || !Array.isArray(technologies) || technologies.length === 0) {
       return NextResponse.json(
-        { error: 'Missing required fields: title, description, and technologies are required' },
+        { error: 'Missing required fields: title, description, and technologies (non-empty array) are required' },
         { status: 400 }
       );
     }
