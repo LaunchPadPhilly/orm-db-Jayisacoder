@@ -1,28 +1,30 @@
+import Link from 'next/link';
+
 export default function Home() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-8">
+    <div className="min-h-screen flex items-center justify-center p-8 bg-purple-50">
       <div className="max-w-4xl text-center">
         <h1 className="text-6xl font-bold mb-6 text-gray-900">
-          Welcome to My Portfolio
+          Hi, I'm Brayden!
         </h1>
-        
         <p className="text-xl text-gray-600 mb-8">
-          This is your homepage starter template. Customize this page to introduce yourself!
+          I am a software engineer. I feel confident in my abilities to create solutions that are both efficient and effective. I am passionate about learning new technologies and continuously improving my skills.
         </p>
-
-        <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 text-left">
-          <h2 className="text-2xl font-bold mb-4 text-blue-900">
-            📝 TODO: Customize Your Homepage
+        <div className="flex justify-center gap-6 mb-8">
+          <Link href="/about" className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">About Me</Link>
+          <Link href="/projects" className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">Projects</Link>
+          <Link href="/contact" className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">Contact</Link>
+        </div>
+        <div className="bg-purple-100 border-2 border-purple-200 rounded-lg p-6 text-left">
+          <h2 className="text-2xl font-bold mb-4 text-purple-900">
+            Welcome!
           </h2>
-          <ul className="space-y-2 text-blue-800">
-            <li>✏️ Change the heading to include your name</li>
-            <li>✏️ Write a brief introduction about yourself</li>
-            <li>✏️ Add navigation links to your other pages</li>
-            <li>✏️ Choose your own color scheme</li>
-            <li>✏️ Make it responsive for mobile devices</li>
+          <ul className="space-y-2 text-purple-800">
+            <li>✨ Explore my projects and see what I've built</li>
+            <li>✨ Learn more about me and my skills</li>
+            <li>✨ Get in touch for collaboration or questions</li>
           </ul>
         </div>
-
         <div className="mt-8 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-lg">
           <p className="text-yellow-900 font-semibold">
             💡 Tip: Check the README.md for detailed instructions and examples!
@@ -30,5 +32,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }
