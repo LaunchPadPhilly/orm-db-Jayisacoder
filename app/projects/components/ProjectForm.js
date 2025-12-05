@@ -39,15 +39,15 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
     const urlRegex = /^https?:\/\/.+\..+/;
     
     if (formData.imageUrl && !urlRegex.test(formData.imageUrl)) {
-      newErrors.imageUrl = 'Invalid URL format';
+      newErrors.imageUrl = 'Please enter a valid URL';
     }
 
     if (formData.projectUrl && !urlRegex.test(formData.projectUrl)) {
-      newErrors.projectUrl = 'Invalid URL format';
+      newErrors.projectUrl = 'Please enter a valid URL';
     }
 
     if (formData.githubUrl && !urlRegex.test(formData.githubUrl)) {
-      newErrors.githubUrl = 'Invalid URL format';
+      newErrors.githubUrl = 'Please enter a valid URL';
     }
 
     setErrors(newErrors);
@@ -145,10 +145,11 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
 
             {/* Description */}
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">
+              <label htmlFor="description" className="block text-sm font-medium mb-2">
                 Description *
               </label>
               <textarea
+                id="description"
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
@@ -257,7 +258,7 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
                 disabled={isSubmitting}
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
               >
-                {isSubmitting ? 'Creating...' : 'Create Project'}
+                {isSubmitting ? 'Creating Project...' : 'Create Project'}
               </button>
             </div>
           </form>

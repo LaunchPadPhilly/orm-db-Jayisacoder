@@ -1,8 +1,61 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import ProjectForm from "./components/ProjectForm";
+
 export default function Projects() {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const res = await fetch("/api/projects");
+        if (!res.ok) throw new Error("Failed to load projects");
+        const data = await res.json();
+        setProjects(data);
+      } catch (err) {
+        console.error(err);
+        setLoadError("Could not load projects.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProjects();
+  }, []);
+
+  const handleSubmit = async (formData) => {
+    const res = await fetch("/api/projects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    if (!res.ok) {
+      const { error } = await res.json();
+      throw new Error(error || "Failed to create project");
+    }
+
+    const created = await res.json();
+    setProjects((prev) => [created, ...prev]);
+    setIsFormOpen(false);
+  };
+
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-5xl font-bold mb-12">My Projects</h1>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12">
+          <h1 className="text-5xl font-bold">My Projects</h1>
+          <button
+            onClick={() => setIsFormOpen(true)}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Add Project
+          </button>
+        </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           {/* Project 1 */}
@@ -67,7 +120,66 @@ export default function Projects() {
             Check back regularly to see what I&apos;m building next!
           </p>
         </div>
+
+        <div className="mt-10">
+          <h2 className="text-3xl font-bold mb-4">Latest Projects</h2>
+          {loading && <p>Loading projects...</p>}
+          {loadError && <p className="text-red-600 mb-4">{loadError}</p>}
+          {!loading && !loadError && projects.length === 0 && (
+            <p className="text-gray-600">No projects yet. Add one to get started.</p>
+          )}
+          {!loading && projects.length > 0 && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map((project) => (
+                <div key={project.id} className="border rounded-lg p-4 shadow-sm bg-white">
+                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                  <p className="text-gray-700 mb-3">{project.description}</p>
+                  {project.technologies?.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {project.technologies.map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <div className="flex gap-3 text-sm text-blue-700">
+                    {project.projectUrl && (
+                      <a
+                        href={project.projectUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:underline"
+                      >
+                        Live
+                      </a>
+                    )}
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:underline"
+                      >
+                        GitHub
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
+
+      <ProjectForm
+        isOpen={isFormOpen}
+        onSubmit={handleSubmit}
+        onCancel={() => setIsFormOpen(false)}
+      />
     </div>
   )
 }
