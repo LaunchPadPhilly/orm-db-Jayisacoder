@@ -50,7 +50,7 @@ export default function TechnologyInput({ technologies = [], onChange, error }) 
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder="Enter a technology..."
+          placeholder="Type a technology"
           className={`flex-1 p-2 border rounded ${
             error ? 'border-red-500' : 'border-gray-300'
           }`}
@@ -104,7 +104,7 @@ export default function TechnologyInput({ technologies = [], onChange, error }) 
                 onClick={() => addTechnology(tech)}
                 className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100"
               >
-                + {tech}
+                {tech}
               </button>
             ))}
         </div>

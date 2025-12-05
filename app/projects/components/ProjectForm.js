@@ -124,10 +124,11 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
           <form onSubmit={handleSubmit}>
             {/* Title */}
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">
-                Title *
+              <label htmlFor="project-title" className="block text-sm font-medium mb-2">
+                Project Title
               </label>
               <input
+                id="project-title"
                 type="text"
                 name="title"
                 value={formData.title}
@@ -173,10 +174,11 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
 
             {/* Image URL */}
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">
+              <label htmlFor="image-url" className="block text-sm font-medium mb-2">
                 Image URL
               </label>
               <input
+                id="image-url"
                 type="text"
                 name="imageUrl"
                 value={formData.imageUrl}
@@ -193,10 +195,11 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
 
             {/* Project URL */}
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">
+              <label htmlFor="project-url" className="block text-sm font-medium mb-2">
                 Project URL
               </label>
               <input
+                id="project-url"
                 type="text"
                 name="projectUrl"
                 value={formData.projectUrl}
@@ -213,10 +216,11 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
 
             {/* GitHub URL */}
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">
+              <label htmlFor="github-url" className="block text-sm font-medium mb-2">
                 GitHub URL
               </label>
               <input
+                id="github-url"
                 type="text"
                 name="githubUrl"
                 value={formData.githubUrl}
