@@ -100,7 +100,7 @@ By implementing these API routes, you'll learn:
    - Handle Prisma P2025 error (record not found) → return 404
 
 5. **DELETE /api/projects/[id]** - Remove project
-   - Use `prisma.project.delete()` with ID
+   - Use `` with ID
    - Handle Prisma P2025 error → return 404
    - Return success message
 
